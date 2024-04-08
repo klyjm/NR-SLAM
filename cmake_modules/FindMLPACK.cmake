@@ -30,10 +30,12 @@ find_library(MLPACK_LIBRARY
 	NAMES mlpack
 	PATHS "$ENV{ProgramFiles}/mlpack/lib"  "$ENV{ProgramFiles}/mlpack/lib64" "$ENV{ProgramFiles}/mlpack"
 )
+message(STATUS "${MLPACK_LIBRARY}")
 find_path(MLPACK_INCLUDE_DIR
 	NAMES mlpack/core.hpp mlpack/prereqs.hpp
 	PATHS "$ENV{ProgramFiles}/mlpack"
 )
+message(STATUS "${MLPACK_INCLUDE_DIR}")
 
 find_package_handle_standard_args(MLPACK
 	REQUIRED_VARS MLPACK_LIBRARY MLPACK_INCLUDE_DIR

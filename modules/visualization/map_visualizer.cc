@@ -33,6 +33,7 @@ options_(options), map_(map), last_frame_id_drawn_(-1), last_frame_id_saved_(-1)
 
 void MapVisualizer::InitializePangolin() {
     pangolin::CreateWindowAndBind("DefSLAM",2*1024,768);
+//    pangolin::CreateWindowAndBind("DefSLAM",2*2560,1440);
 
     // 3D Mouse handler requires depth testing to be enabled
     glEnable(GL_DEPTH_TEST);
@@ -67,19 +68,23 @@ void MapVisualizer::InitializePangolin() {
     // Define Camera Render Object (for view / scene browsing).
     left_renderer_ = pangolin::OpenGlRenderState(
             pangolin::ProjectionMatrix(1024,768,500,500,512,389,0.1,1000),
+//            pangolin::ProjectionMatrix(2560,1440,500,500,1080,720,0.1,10000),
             left_view);
 
     right_renderer_ = pangolin::OpenGlRenderState(
             pangolin::ProjectionMatrix(1024,768,500,500,512,389,0.1,1000),
+//            pangolin::ProjectionMatrix(2560,1440,500,500,1080,720,0.1,10000),
             right_view);
 
     // Add named OpenGL viewport to window and provide 3D Handler
     left_display_ = pangolin::Display("[Left view] Map")
             .SetAspect(1024.0f/768.0f)
+//            .SetAspect(2560.0f/1440.0f)
             .SetHandler(new pangolin::Handler3D(left_renderer_));
 
     right_display = pangolin::Display("[Right view] Map")
             .SetAspect(1024.0f/768.0f)
+//            .SetAspect(2560.0f/1440.0f)
             .SetHandler(new pangolin::Handler3D(right_renderer_));
 
     main_display_ = pangolin::Display("multi")
@@ -361,10 +366,11 @@ void MapVisualizer::SaveRenderToDisk() {
     }
 
     if(last_frame_id_saved_ < last_frame_id_drawn_) {
+        LOG(INFO) << "Save Render";
         const string render_path = options_.render_save_path +
                 to_string(last_frame_id_drawn_);
         main_display_.SaveRenderNow(render_path);
-
+        LOG(INFO) << "Saved Render";
         last_frame_id_saved_ = last_frame_id_drawn_;
     }
 }

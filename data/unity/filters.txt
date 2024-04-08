@@ -1,0 +1,2 @@
+BrightFilter 225
+Predefined /root/NR-SLAiM-Docker/NR_SLAM/data/unity/mask.jpg

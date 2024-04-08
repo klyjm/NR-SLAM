@@ -95,6 +95,7 @@ void Tracking::TrackImage(const cv::Mat &im, const absl::flat_hash_map<std::stri
         PointReuse(im, cv::Mat(), lost_mappoint_ids);
 
         if (current_frame_->GetKeypointsWithStatus({TRACKED_WITH_3D}).size() < 10) {
+            LOG(INFO) << "GetKeypointsWithStatus(TRACKED_WITH_3D).size() < 10";
             exit(0);
         }
 

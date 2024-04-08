@@ -26,5 +26,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(third_party/abseil-cpp)
 add_subdirectory(third_party/g2o)
+add_subdirectory(third_party/Sophus)
 add_subdirectory(modules)
 add_subdirectory(apps)

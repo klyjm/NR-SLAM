@@ -18,7 +18,7 @@ if(NOT CMAKE_BUILD_TYPE)
       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
       FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
-
+message(STATUS "${CMAKE_BUILD_TYPE}")
 # postfix, based on type
 set(CMAKE_DEBUG_POSTFIX "_d" CACHE STRING "postfix applied to debug build of libraries")
 set(CMAKE_RELEASE_POSTFIX "" CACHE STRING "postfix applied to release build of libraries")

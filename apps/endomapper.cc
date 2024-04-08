@@ -36,7 +36,7 @@ ABSL_FLAG(int, end_frame, 0, "Last frame of the dataset to process");
 int main(int argc, char **argv) {
     // Parse command line argumemnts
     absl::ParseCommandLine(argc, argv);
-
+    std::cout << "Start" << endl;
     // Process command arguments
     string dataset_path = absl::GetFlag(FLAGS_dataset_path);
     if(dataset_path.empty()){
@@ -51,21 +51,28 @@ int main(int argc, char **argv) {
 
     int starting_frame = absl::GetFlag(FLAGS_starting_frame);
     int end_frame = absl::GetFlag(FLAGS_end_frame);
-
+    std::cout << "Loading..." << endl;
     Endomapper dataset(dataset_path);
+    std::cout << "Loading finished" << endl;
 
     // Create SLAM system.
+    std::cout << "Initing..." << endl;
     System SLAM(settings_path);
-
+    std::cout << "Initing finished" << endl;
     for (int idx = starting_frame; idx < end_frame; idx++) {
         LOG(INFO) << "Processing image " << idx;
         auto image = dataset.GetImage(idx);
         CHECK_OK(image);
 
         // Resize input image.
+        LOG(INFO) << "Resize input image. ";
         cv::Size newSize((*image).cols/2.0f, (*image).rows/2.0f);
+//        cv::Size newSize((*image).cols, (*image).rows);
         cv::resize(*image, *image, newSize);
-
+        LOG(INFO) << "Tracking";
+        if (idx == 7){
+            LOG(INFO) << "Catch";
+        }
         SLAM.TrackImage(*image);
     }
 

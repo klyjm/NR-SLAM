@@ -29,15 +29,18 @@ System::System(const string settings_file_path) {
     LOG(INFO).NoPrefix() << "This program comes with ABSOLUTELY NO WARRANTY;";
     LOG(INFO).NoPrefix() << "This is free software, and you are welcome to redistribute it";
     LOG(INFO).NoPrefix() << "under certain conditions. See LICENSE.txt.";
-
+    std::cout << "SLAM start" << endl;
     settings_ = make_unique<Settings>(settings_file_path);
+    std::cout << "SLAM start" << endl;
     LOG(INFO) << *settings_;
 
     // Initialize image processing stuff
+    std::cout << "Initialize image processing stuff" << endl;
     clahe_ = cv::createCLAHE(3.0, cv::Size(8, 8));
     masker_ = settings_->getMasker();
 
     // Create map
+    std::cout << "Create map" << endl;
     Map::Options map_options;
     map_options.max_temporal_buffer_size = 20;
     map_ = make_shared<Map>(map_options);
@@ -116,12 +119,15 @@ void System::TrackImage(const cv::Mat &im) {
     cv::Mat processed_image = ImageProcessing(im, im_gray);
 
     // Insert image in the image visualizer.
+    LOG(INFO) << "Insert";
     image_visualizer_->SetCurrentImage(im, processed_image);
 
     // Generate image mask.
+    LOG(INFO) << "Generate";
     auto masks = masker_->GetAllMasks(im_gray);
 
     // Perform tracking.
+    LOG(INFO) << "Tracking";
     tracker_->TrackImage(im_gray, masks, cv::Mat(), processed_image);
 
     // Perform mapping.
